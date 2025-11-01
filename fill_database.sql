@@ -139,6 +139,12 @@ BEGIN
         );
     END LOOP;
 
+
+    -- Заполнение категорий (10)
+    FOR i IN 1..10 LOOP
+        INSERT INTO Categories (название) VALUES ('Категория ' || i);
+    END LOOP;
+
     RAISE NOTICE 'База данных успешно заполнена!';
     RAISE NOTICE 'Пользователей: %', user_count;
     RAISE NOTICE 'Событий: %', event_count;

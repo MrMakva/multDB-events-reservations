@@ -16,7 +16,7 @@ CREATE TABLE PaymentMethods (
 -- Таблица событий
 CREATE TABLE Events (
     event_id SERIAL PRIMARY KEY,
-    название VARCHAR(255) NOT NULL,
+     VARCHAR(255) NOT NULL,
     дата TIMESTAMP NOT NULL,
     место VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -39,6 +39,22 @@ CREATE TABLE Transactions (
     статус VARCHAR(50) NOT NULL,
     время TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     booking_id INTEGER NOT NULL REFERENCES Bookings(booking_id),
-    payment_method_id INTEGER NOT NULL REFERENCES PaymentMethods(payment_method_id),
+    payment_method_id INTEGER NOT NULL REFERENCES PaymentMethods(payment_method_id), 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE venues (
+    venue_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    capacity INTEGER NOT NULL,
+    category_id INTEGER NOT NULL REFERENCES categories(category_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

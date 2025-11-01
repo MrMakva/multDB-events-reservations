@@ -65,10 +65,10 @@ SELECT
     t.transaction_id,
     t.amount * 0.8,
     CASE 
-        WHEN seq % 5 = 0 THEN 'Event cancelled'
-        WHEN seq % 5 = 1 THEN 'User request'
-        WHEN seq % 5 = 2 THEN 'Double booking'
-        WHEN seq % 5 = 3 THEN 'Payment error'
+        WHEN row_number() OVER (ORDER BY t.transaction_id) % 5 = 0 THEN 'Event cancelled'
+        WHEN row_number() OVER (ORDER BY t.transaction_id) % 5 = 1 THEN 'User request'
+        WHEN row_number() OVER (ORDER BY t.transaction_id) % 5 = 2 THEN 'Double booking'
+        WHEN row_number() OVER (ORDER BY t.transaction_id) % 5 = 3 THEN 'Payment error'
         ELSE 'Other reason'
     END,
     CASE 
@@ -105,5 +105,8 @@ SELECT
         ELSE 'Reviews'
     END,
     (seq % 1000000) + 1,
-    '{"ip": "192.168.1.' || (seq % 255 + 1) || '", "user_agent": "Browser ' || (seq % 10) || '"}'
+    jsonb_build_object(
+        'ip', '192.168.1.' || (seq % 255 + 1)::text,
+        'user_agent', 'Browser ' || (seq % 10)::text
+    )
 FROM generate_series(1, 800000) seq;
