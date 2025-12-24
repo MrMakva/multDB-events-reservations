@@ -1,0 +1,11 @@
+для запуска монго
+
+linux@DESKTOP-U3072BL:~/dba$ nvm use 20
+
+linux@DESKTOP-U3072BL:~/dba$ mongod --dbpath ~/mongo_data --fork --logpath ~/mongo.log
+
+about to fork child process, waiting until server is ready for connections.
+forked process: 5458
+child process started successfully, parent exiting
+
+linux@DESKTOP-U3072BL:~/dba$ mongosh
